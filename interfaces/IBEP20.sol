@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ~0.8.17;
+
 interface IBEP20 {
     /**
      * @dev Returns the amount of tokens in existence.
