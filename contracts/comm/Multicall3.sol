@@ -1,4 +1,8 @@
-// SPDX-License-Identifier: MIT
+/**
+ *Submitted for verification at BscScan.com on 2022-03-09
+ */
+
+// SPDX-License-Identifier: GPL-3.0
 pragma solidity ~0.8.17;
 
 /// @title Multicall3
