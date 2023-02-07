@@ -5,9 +5,6 @@ import "./Ownable.sol";
 import "./interfaces/IMdexFactory.sol";
 import "./interfaces/IMdexRouter.sol";
 import "./interfaces/IWHT.sol";
-// import "./interfaces/IMdexPair.sol";
-// import "./interfaces/IERC20.sol";
-// import "./interfaces/ISwapMining.sol";
 
 import "./libraries/SafeMath.sol";
 import "./libraries/TransferHelper.sol";
@@ -100,13 +97,13 @@ contract MdexRouter is IMdexRouter, Ownable {
 
         if (inQty > 0) {
             for (uint8 i = 0; i < level; i++) {
-                amounts[i] = getAmountsIn(inQty**(i + 1), inPath)[0];
+                amounts[i] = getAmountsIn(inQty*(i + 1), inPath)[0];
             }
         }
         if (outQty > 0) {
             uint256[] memory outResult;
             for (uint8 i = level; i < level * 2; i++) {
-                outResult = getAmountsOut(outQty**(i + 1 - level), outPath);
+                outResult = getAmountsOut(outQty*(i + 1 - level), outPath);
                 amounts[i] = outResult[outResult.length - 1];
             }
         }
