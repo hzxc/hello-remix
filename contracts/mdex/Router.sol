@@ -106,7 +106,7 @@ contract MdexRouter is IMdexRouter, Ownable {
         if (outQty > 0) {
             uint256[] memory outResult;
             for (uint8 i = level; i < level * 2; i++) {
-                outResult = getAmountsOut(outQty**(i - 3), outPath);
+                outResult = getAmountsOut(outQty**(i + 1 - level), outPath);
                 amounts[i] = outResult[outResult.length - 1];
             }
         }
