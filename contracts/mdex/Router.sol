@@ -39,6 +39,19 @@ contract MdexRouter is IMdexRouter, Ownable {
         return IERC20(token).balanceOf(act);
     }
 
+    function getBals(address[] memory tokens, address act)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        uint256[] memory bals = new uint256[](tokens.length);
+        for (uint8 i = 0; i < tokens.length; i++) {
+            bals[i] = IERC20(tokens[i]).balanceOf(act);
+        }
+
+        return bals;
+    }
+
     function deposit(address token, uint256 amounts) public {
         TransferHelper.safeTransferFrom(
             token,
