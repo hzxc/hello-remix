@@ -5,6 +5,7 @@ import "./Ownable.sol";
 import "./interfaces/IMdexFactory.sol";
 import "./interfaces/IMdexRouter.sol";
 import "./interfaces/IWHT.sol";
+import "./interfaces/IERC20.sol";
 
 import "./libraries/SafeMath.sol";
 import "./libraries/TransferHelper.sol";
@@ -32,6 +33,10 @@ contract MdexRouter is IMdexRouter, Ownable {
 
     function getBlockNum() public view returns (uint256) {
         return block.number;
+    }
+
+    function getBal(address token, address act) public view returns (uint256) {
+        return IERC20(token).balanceOf(act);
     }
 
     function deposit(address token, uint256 amounts) public {
