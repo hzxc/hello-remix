@@ -61,7 +61,7 @@ contract MdexRouter is IMdexRouter, Ownable {
         );
     }
 
-    function depositWETH() public payable onlyOwner {
+    function depositWETH() public payable {
         require(msg.value > 0, "depositWETH: INVALID_VALUE");
         IWHT(WHT).deposit{value: msg.value}();
     }
@@ -75,11 +75,15 @@ contract MdexRouter is IMdexRouter, Ownable {
         );
     }
 
+    function withdrawETH(uint256 amounts) public onlyOwner {
+        TransferHelper.safeTransferETH(msg.sender, amounts);
+    }
+
     function approve(
         address token,
         address to,
         uint256 val
-    ) public onlyOwner returns (bool) {
+    ) public returns (bool) {
         val = val > 0 ? val : uint256(-1);
         TransferHelper.safeApprove(token, to, val);
     }
