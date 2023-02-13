@@ -3,7 +3,7 @@ pragma solidity =0.6.6;
 import "./Ownable.sol";
 
 import "./interfaces/IUniswapV2Factory.sol";
-import "./interfaces/IUniswapV2Router01.sol";
+import "./interfaces/IUniswapV2Router.sol";
 import "./interfaces/IWETH.sol";
 import "./interfaces/IERC20.sol";
 
@@ -11,7 +11,7 @@ import "./libraries/SafeMath.sol";
 import "./libraries/TransferHelper.sol";
 import "./libraries/UniswapV2Library.sol";
 
-contract UniswapV2Router02 is IUniswapV2Router01, Ownable {
+contract UniswapV2Router is IUniswapV2Router, Ownable {
     using SafeMath for uint256;
 
     address public immutable override factory =
