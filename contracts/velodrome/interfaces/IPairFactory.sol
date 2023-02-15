@@ -20,4 +20,6 @@ interface IPairFactory {
         address tokenB,
         bool stable
     ) external returns (address pair);
+
+    function getFee(bool stable) external view returns (uint256);
 }

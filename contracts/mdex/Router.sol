@@ -25,7 +25,7 @@ contract MdexRouter is IMdexRouter, Ownable {
 
     constructor() public {}
 
-    receive() external payable {}
+    // receive() external payable {}
 
     function getTimestamp() public view returns (uint256) {
         return block.timestamp;

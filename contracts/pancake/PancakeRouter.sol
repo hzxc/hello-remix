@@ -544,6 +544,7 @@ library PancakeLibrary {
         );
         uint256 numerator = reserveIn.mul(amountOut).mul(10000);
         uint256 denominator = reserveOut.sub(amountOut).mul(9975);
+
         amountIn = (numerator / denominator).add(1);
     }
 
