@@ -30,7 +30,7 @@ contract Query {
 
         if (sellQty > 0) {
             for (uint8 i = lv; i < lv * 2; i++) {
-                (amounts[i], ) = IQuoter(quoter).quoteExactOutput(
+                (amounts[i], ) = IQuoter(quoter).quoteExactInput(
                     sellPath,
                     sellQty.mul(i + 1 - lv)
                 );
@@ -48,11 +48,11 @@ contract Query {
         return block.number;
     }
 
-    function getBal(address token, address act) public view returns (uint256) {
+    function bal(address token, address act) public view returns (uint256) {
         return IERC20(token).balanceOf(act);
     }
 
-    function getBals(address[] memory tokens, address act)
+    function bals(address[] memory tokens, address act)
         public
         view
         returns (uint256[] memory)
