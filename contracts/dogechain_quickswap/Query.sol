@@ -48,11 +48,11 @@ contract Query {
         return block.number;
     }
 
-    function bal(address token, address act) public view returns (uint256) {
+    function getBal(address token, address act) public view returns (uint256) {
         return IERC20(token).balanceOf(act);
     }
 
-    function bals(address[] memory tokens, address act)
+    function getBals(address[] memory tokens, address act)
         public
         view
         returns (uint256[] memory)
