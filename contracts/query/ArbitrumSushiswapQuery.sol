@@ -10,10 +10,10 @@ contract Query {
     using SafeMath for uint256;
 
     address public immutable factory =
-        0xb0b670fc1F7724119963018DB0BfA86aDb22d941;
+        0xc35DADB65012eC5796536bD9864eD8773aBc74C4;
 
     bytes32 public immutable pairCodeHash =
-        0x2ad889f82040abccb2649ea6a874796c1601fb67f91a747a80e08860c73ddf24;
+        0xe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303;
 
     uint256 public immutable fee = 30;
 
