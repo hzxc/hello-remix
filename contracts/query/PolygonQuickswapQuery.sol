@@ -15,6 +15,8 @@ contract Query {
     bytes32 public immutable pairCodeHash =
         0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f;
 
+    uint256 public immutable fee = 30;
+
     function getTimestamp() public view returns (uint256) {
         return block.timestamp;
     }
@@ -88,8 +90,7 @@ contract Query {
     function getAmountIn(
         uint256 amountOut,
         uint256 reserveIn,
-        uint256 reserveOut,
-        uint256 fee
+        uint256 reserveOut
     ) public pure returns (uint256 amountIn) {
         require(amountOut > 0, "getAmountIn: INSUFFICIENT_OUTPUT_AMOUNT");
         require(
@@ -105,8 +106,7 @@ contract Query {
     function getAmountOut(
         uint256 amountIn,
         uint256 reserveIn,
-        uint256 reserveOut,
-        uint256 fee
+        uint256 reserveOut
     ) public pure returns (uint256 amountOut) {
         require(amountIn > 0, "getAmountOut: INSUFFICIENT_INPUT_AMOUNT");
         require(
@@ -120,11 +120,11 @@ contract Query {
         amountOut = numerator / denominator;
     }
 
-    function getAmountsIn(
-        uint256 amountOut,
-        address[] memory path,
-        uint256 fee
-    ) public view returns (uint256[] memory amounts) {
+    function getAmountsIn(uint256 amountOut, address[] memory path)
+        public
+        view
+        returns (uint256[] memory amounts)
+    {
         require(path.length >= 2, "getAmountsIn: INVALID_PATH");
         amounts = new uint256[](path.length);
         amounts[amounts.length - 1] = amountOut;
@@ -133,20 +133,15 @@ contract Query {
                 path[i - 1],
                 path[i]
             );
-            amounts[i - 1] = getAmountIn(
-                amounts[i],
-                reserveIn,
-                reserveOut,
-                fee
-            );
+            amounts[i - 1] = getAmountIn(amounts[i], reserveIn, reserveOut);
         }
     }
 
-    function getAmountsOut(
-        uint256 amountIn,
-        address[] memory path,
-        uint256 fee
-    ) public view returns (uint256[] memory amounts) {
+    function getAmountsOut(uint256 amountIn, address[] memory path)
+        public
+        view
+        returns (uint256[] memory amounts)
+    {
         require(path.length >= 2, "getAmountsOut: INVALID_PATH");
         amounts = new uint256[](path.length);
         amounts[0] = amountIn;
@@ -155,12 +150,7 @@ contract Query {
                 path[i],
                 path[i + 1]
             );
-            amounts[i + 1] = getAmountOut(
-                amounts[i],
-                reserveIn,
-                reserveOut,
-                fee
-            );
+            amounts[i + 1] = getAmountOut(amounts[i], reserveIn, reserveOut);
         }
     }
 
@@ -172,21 +162,16 @@ contract Query {
         address[] memory outPath
     ) public view returns (uint256[] memory) {
         uint256[] memory amounts = new uint256[](level * 2);
-        uint256 fee = 30;
 
         if (inQty > 0) {
             for (uint8 i = 0; i < level; i++) {
-                amounts[i] = getAmountsIn(inQty * (i + 1), inPath, fee)[0];
+                amounts[i] = getAmountsIn(inQty * (i + 1), inPath)[0];
             }
         }
         if (outQty > 0) {
             uint256[] memory outResult;
             for (uint8 i = level; i < level * 2; i++) {
-                outResult = getAmountsOut(
-                    outQty * (i + 1 - level),
-                    outPath,
-                    fee
-                );
+                outResult = getAmountsOut(outQty * (i + 1 - level), outPath);
                 amounts[i] = outResult[outResult.length - 1];
             }
         }
