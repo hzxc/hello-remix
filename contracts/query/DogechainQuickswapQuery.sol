@@ -52,11 +52,10 @@ contract Query {
         return IERC20(token).balanceOf(act);
     }
 
-    function getBals(address[] memory tokens, address act)
-        public
-        view
-        returns (uint256[] memory)
-    {
+    function getBals(
+        address[] memory tokens,
+        address act
+    ) public view returns (uint256[] memory) {
         uint256[] memory bals = new uint256[](tokens.length);
         for (uint8 i = 0; i < tokens.length; i++) {
             bals[i] = IERC20(tokens[i]).balanceOf(act);

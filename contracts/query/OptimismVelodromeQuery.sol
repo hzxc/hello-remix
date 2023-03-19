@@ -26,11 +26,10 @@ contract Query {
         return IERC20(token).balanceOf(act);
     }
 
-    function getBals(address[] memory tokens, address act)
-        public
-        view
-        returns (uint256[] memory)
-    {
+    function getBals(
+        address[] memory tokens,
+        address act
+    ) public view returns (uint256[] memory) {
         uint256[] memory bals = new uint256[](tokens.length);
         for (uint8 i = 0; i < tokens.length; i++) {
             bals[i] = IERC20(tokens[i]).balanceOf(act);
@@ -39,21 +38,19 @@ contract Query {
         return bals;
     }
 
-    function sortTokens(address tknA, address tknB)
-        public
-        pure
-        returns (address tkn0, address tkn1)
-    {
+    function sortTokens(
+        address tknA,
+        address tknB
+    ) public pure returns (address tkn0, address tkn1) {
         require(tknA != tknB, "Router: IDENTICAL_ADDRESSES");
         (tkn0, tkn1) = tknA < tknB ? (tknA, tknB) : (tknB, tknA);
         require(tkn0 != address(0), "Router: ZERO_ADDRESS");
     }
 
-    function pairFor(address tknA, address tknB)
-        public
-        view
-        returns (address pair)
-    {
+    function pairFor(
+        address tknA,
+        address tknB
+    ) public view returns (address pair) {
         (address tkn0, address tkn1) = sortTokens(tknA, tknB);
         pair = address(
             uint160(
@@ -71,11 +68,10 @@ contract Query {
         );
     }
 
-    function getReserves(address tokenA, address tokenB)
-        public
-        view
-        returns (uint256 reserveA, uint256 reserveB)
-    {
+    function getReserves(
+        address tokenA,
+        address tokenB
+    ) public view returns (uint256 reserveA, uint256 reserveB) {
         (address token0, ) = sortTokens(tokenA, tokenB);
         (uint256 reserve0, uint256 reserve1, ) = IPair(pairFor(tokenA, tokenB))
             .getReserves();
@@ -169,7 +165,7 @@ contract Query {
         uint256 outQty,
         address[] memory inPath,
         address[] memory outPath
-    ) public view returns (uint256[] memory) {
+    ) public view returns (uint256[] memory, uint256) {
         uint256[] memory amounts = new uint256[](level * 2);
         uint256 fee = IPairFactory(factory).getFee(false);
         if (inQty > 0) {
@@ -189,6 +185,6 @@ contract Query {
             }
         }
 
-        return amounts;
+        return (amounts, block.number);
     }
 }
