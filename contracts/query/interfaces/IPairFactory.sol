@@ -2,6 +2,8 @@
 pragma solidity ~0.8.17;
 
 interface IPairFactory {
+    function feeRate() external view returns (uint256);
+
     function getFee() external view returns (uint256);
 
     function getFee(bool stable) external view returns (uint256);
